@@ -1,0 +1,1 @@
+import"./hoisted.D8jPrrWn.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("hero-search-input");e&&e.addEventListener("focus",()=>{window.location.href="/search"})});

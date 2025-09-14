@@ -1,0 +1,1 @@
+import"./hoisted.D_kD5FN_.js";document.addEventListener("DOMContentLoaded",()=>{const e=document.getElementById("company-search"),t=document.getElementById("category-filter");e&&e.addEventListener("input",()=>{const o=e.value.trim().toLowerCase();console.log("Searching for:",o)}),t&&t.addEventListener("change",()=>{const o=t.value;console.log("Selected category:",o)})});
