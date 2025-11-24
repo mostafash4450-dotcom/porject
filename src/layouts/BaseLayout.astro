@@ -1,0 +1,121 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title: string;
+  description: string;
+  keywords?: string;
+  image?: string;
+  type?: string;
+  publishedTime?: string;
+  author?: string;
+}
+
+const {
+  title,
+  description,
+  keywords = "صياد الاحتيال, شركات موثوقة, مكاتب محاماة, شركات نصب, استرداد الأموال, فوركس, تداول, عملات رقمية, شركات وهمية, احتيال مالي",
+  image = "https://hunterofscams.com/images/ScamsHunter.png",
+  type = "website",
+  publishedTime,
+  author = "فريق صياد الاحتيال"
+} = Astro.props;
+
+const canonicalURL = Astro.site ? new URL(Astro.url.pathname, Astro.site) : `https://hunterofscams.com${Astro.url.pathname}`;
+const schemaData = {
+  "@context": "https://schema.org",
+  "@type": "WebSite",
+  "name": "صياد الاحتيال",
+  "url": "https://hunterofscams.com",
+  "description": "موقع صياد الاحتيال هو أول موقع للتحذير من شركات الاحتيال في منطقة الشرق الأوسط، يقدم معلومات دقيقة وموثقة عن شركات التداول النصابة ومكاتب المحاماة المشبوهة",
+  "publisher": {
+    "@type": "Organization",
+    "name": "صياد الاحتيال",
+    "logo": {
+      "@type": "ImageObject",
+      "url": "https://hunterofscams.com/images/ScamsHunter.png"
+    }
+  },
+  "inLanguage": "ar",
+  "potentialAction": {
+    "@type": "SearchAction",
+    "target": {
+      "@type": "EntryPoint",
+      "urlTemplate": "https://hunterofscams.com/search?q={search_term_string}"
+    },
+    "query-input": "required name=search_term_string"
+  }
+};
+---
+
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width" />
+    <link rel="icon" type="image/png" sizes="32x32" href="https://hunterofscams.com/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="96x96" href="https://hunterofscams.com/images/favicon.png" />
+    <link rel="icon" type="image/png" sizes="192x192" href="https://hunterofscams.com/images/favicon.png" />
+    <meta name="generator" content={Astro.generator} />
+
+    <!-- Primary Meta Tags -->
+    <title>{title}</title>
+    <meta name="title" content={title} />
+    <meta name="description" content={description} />
+    <meta name="keywords" content={keywords} />
+    <meta name="author" content={author} />
+    <meta name="robots" content="index, follow" />
+    <meta name="language" content="Arabic" />
+
+    <!-- Open Graph / Facebook -->
+    <meta property="og:type" content={type} />
+    <meta property="og:url" content={canonicalURL} />
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:image" content={image} />
+    <meta property="og:locale" content="ar_AR" />
+    <meta property="og:site_name" content="صياد الاحتيال" />
+    {publishedTime && <meta property="article:published_time" content={publishedTime} />}
+
+    <!-- Twitter -->
+    <meta property="twitter:card" content="summary_large_image" />
+    <meta property="twitter:url" content={canonicalURL} />
+    <meta property="twitter:title" content={title} />
+    <meta property="twitter:description" content={description} />
+    <meta property="twitter:image" content={image} />
+
+    <!-- Canonical URL -->
+    <link rel="canonical" href={canonicalURL} />
+
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+    <!-- JSON-LD Schema -->
+    <script type="application/ld+json" set:html={JSON.stringify(schemaData)} />
+
+    <!-- Zoho SalesIQ -->
+    <script is:inline>
+      window.$zoho = window.$zoho || {};
+      $zoho.salesiq = $zoho.salesiq || {
+        widgetcode: "siq6b2a8b3cf84aa8c2565596a55879b68a",
+        values: {},
+        ready: function() {}
+      };
+      (function() {
+        var d = document;
+        var s = d.createElement('script');
+        s.type = 'text/javascript';
+        s.id = 'zsiqscript';
+        s.defer = true;
+        s.src = 'https://salesiq.zoho.com/widget';
+        var t = d.getElementsByTagName('script')[0];
+        t.parentNode.insertBefore(s, t);
+      })();
+    </script>
+  </head>
+  <body class="min-h-screen flex flex-col bg-gray-50">
+    <slot />
+  </body>
+</html>
