@@ -1,0 +1,122 @@
+---
+import MainLayout from '../../layouts/MainLayout.astro';
+import { articles } from '../../data/articles';
+import { scamCompanies } from '../../data/scamCompanies';
+
+export function getStaticPaths() {
+  const articlePaths = articles.map((article) => ({
+    params: { slug: article.slug },
+    props: { article },
+  }));
+
+  const companyPaths = scamCompanies.map((company) => ({
+    params: { slug: company.id },
+    props: { company },
+  }));
+
+  return [...articlePaths, ...companyPaths];
+}
+
+const { slug } = Astro.params;
+const { article, company } = Astro.props;
+
+const item = article || company;
+const isCompany = !!company;
+const title = isCompany ? company.name : article.title;
+const description = isCompany ? company.description : article.excerpt;
+---
+
+<MainLayout title={title} description={description}>
+  <div class="min-h-screen bg-gray-50 py-16 px-4">
+    <div class="max-w-4xl mx-auto">
+      {isCompany ? (
+        <>
+          <div class="bg-white rounded-lg shadow-lg overflow-hidden mb-8">
+            <div class="relative h-96 bg-gray-200">
+              <img
+                src={company.image}
+                alt={company.name}
+                class="w-full h-full object-contain p-8"
+              />
+            </div>
+            <div class="p-8">
+              <h1 class="text-4xl font-bold text-red-600 mb-6">{company.name}</h1>
+
+              <div class="grid grid-cols-2 gap-8 mb-8">
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-500 mb-2">الموقع</h3>
+                  <p class="text-lg">{company.location}</p>
+                </div>
+                <div>
+                  <h3 class="text-sm font-semibold text-gray-500 mb-2">الموقع الإلكتروني</h3>
+                  <p class="text-lg text-blue-600 break-all">{company.website}</p>
+                </div>
+              </div>
+
+              <div class="mb-8">
+                <h2 class="text-2xl font-bold text-red-900 mb-4">التحذيرات</h2>
+                <ul class="space-y-3">
+                  {company.warnings.map((warning) => (
+                    <li class="flex items-start">
+                      <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="24" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" class="w-6 h-6 text-red-600 ml-3 mt-1 flex-shrink-0">
+                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
+                        <path d="M12 9v4"></path>
+                        <path d="M12 17h.01"></path>
+                      </svg>
+                      <span class="text-lg">{warning}</span>
+                    </li>
+                  ))}
+                </ul>
+              </div>
+
+              <div class="bg-red-50 border-r-4 border-red-600 p-6 rounded">
+                <h3 class="text-lg font-bold text-red-900 mb-2">تحذير هام</h3>
+                <p class="text-gray-700">
+                  هذه الشركة معروفة بعمليات احتيال منظمة. نحن ننصحك بشدة بعدم التعامل معها أو إيداع أي أموال فيها. إذا كنت قد تعاملت معها بالفعل، يرجى التواصل مع جهات قانونية متخصصة.
+                </p>
+              </div>
+            </div>
+          </div>
+        </>
+      ) : (
+        <>
+          <article class="bg-white rounded-lg shadow-lg overflow-hidden">
+            <img
+              src={article.image}
+              alt={article.title}
+              class="w-full h-96 object-cover"
+            />
+
+            <div class="p-8">
+              <div class="flex items-center justify-between mb-4">
+                <span class="inline-block bg-blue-100 text-blue-800 px-4 py-2 rounded-full text-sm font-medium">
+                  {article.category}
+                </span>
+                <span class="text-gray-500">{article.date}</span>
+              </div>
+
+              <h1 class="text-4xl font-bold text-gray-900 mb-6">{article.title}</h1>
+
+              <div class="prose max-w-none text-lg text-gray-700 leading-relaxed">
+                <p class="mb-6">{article.excerpt}</p>
+                <p class="mb-6">
+                  هذا المقال جزء من مبادرة صياد الاحتيال لتوعية المستثمرين عن مخاطر شركات التداول النصابة والطرق الآمنة للاستثمار.
+                </p>
+              </div>
+            </div>
+          </article>
+        </>
+      )}
+
+      <div class="mt-12">
+        <a href="/" class="inline-flex items-center text-blue-600 hover:text-blue-700 font-medium">
+          <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="24" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" class="w-5 h-5 ml-2">
+            <path d="m12 19-7-7 7-7"></path>
+            <path d="M19 12H5"></path>
+          </svg>
+          العودة للرئيسية
+        </a>
+      </div>
+    </div>
+  </div>
+</MainLayout>
