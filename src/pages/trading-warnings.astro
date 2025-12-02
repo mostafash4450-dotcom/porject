@@ -1,55 +1,0 @@
----
-import MainLayout from '../layouts/MainLayout.astro';
-import { scamCompanies } from '../data/scamCompanies';
-
-const title = "أحدث التحذيرات من شركات التداول";
-const description = "قائمة شاملة بأحدث التحذيرات والتنبيهات من شركات التداول النصابة";
----
-
-<MainLayout title={title} description={description}>
-  <div class="min-h-screen bg-gray-50 py-16 px-4">
-    <div class="max-w-6xl mx-auto">
-      <h1 class="text-4xl font-bold mb-4">أحدث التحذيرات من شركات التداول</h1>
-      <p class="text-xl text-gray-600 mb-12">قائمة شاملة بأحدث التحذيرات والتنبيهات من شركات التداول النصابة</p>
-
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-        {scamCompanies.map((company) => (
-          <div class="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-shadow">
-            <div class="relative h-48 bg-gray-200">
-              <img
-                src={company.image}
-                alt={company.name}
-                class="w-full h-full object-contain p-4"
-              />
-            </div>
-            <div class="p-6">
-              <h3 class="text-xl font-bold text-red-600 mb-2">{company.name}</h3>
-              <p class="text-sm text-gray-500 mb-4">📍 {company.location}</p>
-              <p class="text-gray-600 mb-4 line-clamp-2">{company.description}</p>
-              <div class="mb-4">
-                <ul class="space-y-2">
-                  {company.warnings.slice(0, 2).map((warning) => (
-                    <li class="flex items-start text-sm">
-                      <svg xmlns="http://www.w3.org/2000/svg" stroke-width="2" width="24" height="24" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" fill="none" viewBox="0 0 24 24" class="w-4 h-4 text-red-600 ml-2 mt-0.5 flex-shrink-0">
-                        <path d="m21.73 18-8-14a2 2 0 0 0-3.48 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3"></path>
-                        <path d="M12 9v4"></path>
-                        <path d="M12 17h.01"></path>
-                      </svg>
-                      <span>{warning}</span>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-              <a
-                href={`/article/${company.id}`}
-                class="w-full bg-blue-600 text-white py-2 rounded-lg hover:bg-blue-700 transition-colors text-center"
-              >
-                المزيد من التفاصيل
-              </a>
-            </div>
-          </div>
-        ))}
-      </div>
-    </div>
-  </div>
-</MainLayout>
